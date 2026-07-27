@@ -1,23 +1,14 @@
-Project Gyaan
+# Project Gyaan Roadmap
 
-[X]Repository Created
-
-[ ] Article 0
-
-[ ] AI Native Foundations
-
-[ ] Runtime
-
-[ ] Memory
-
-[ ] Planning
-
-[ ] Tools
-
-[ ] Reliable Workflows
-
-[ ] Observability
-
-[ ] Evaluation
-
-[ ]  Production Release
+- [x] Repository created
+- [x] Article 00 — Introducing Project Gyaan
+- [x] Article 01 — What Makes a System AI-Native?
+- [ ] Article 02 — Prompts as Programs
+- [ ] Runtime
+- [ ] Memory
+- [ ] Planning
+- [ ] Tools
+- [ ] Reliable workflows
+- [ ] Observability
+- [ ] Evaluation
+- [ ] Production release
