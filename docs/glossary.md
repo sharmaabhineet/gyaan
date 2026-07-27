@@ -55,7 +55,7 @@ Memory enables a system to remember previous conversations, user preferences, go
 
 ## Planner
 
-**Introduced in:** [Article 01 – What Makes a System AI-Native](../articles/article-01/01-what-makes-a-system-ai-native.md)
+**Introduced in:** [Article 01 – What Makes a System AI-Native](../articles/article-01/01-What-makes-system-ai-native.md)
 
 A component responsible for deciding how to solve a task.
 
