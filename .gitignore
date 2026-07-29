@@ -3,12 +3,25 @@
 .DS_Store
 
 # Python
-.venv/
+# Virtual environment
 venv/
+
+# Python bytecode
 __pycache__/
 *.py[cod]
+
+# Packaging artifacts
+*.egg-info/
+build/
+dist/
+
+# Test cache
 .pytest_cache/
+
+# Type checker
 .mypy_cache/
+
+# Ruff
 .ruff_cache/
 
 # Environment and secrets
