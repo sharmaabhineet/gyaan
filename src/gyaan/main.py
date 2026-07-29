@@ -1,5 +1,9 @@
+from gyaan.app import GyaanApplication
+
+
 def main() -> None:
-    print("Gyaan assistant is ready.")
+    application = GyaanApplication()
+    application.run()
 
 
 if __name__ == "__main__":
