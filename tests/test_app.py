@@ -1,20 +1,15 @@
 from unittest.mock import Mock
 
-from _pytest.capture import CaptureFixture
-
 from gyaan.app import GyaanApplication
 from gyaan.chat_model import ChatModel
 
 
-def test_application_generates_and_prints_response(
-    capsys: CaptureFixture[str],
-) -> None:
+def test_application_generates_response_for_prompt() -> None:
     model = Mock(spec=ChatModel)
     model.generate.return_value = "A generated response"
     application = GyaanApplication(model)
 
-    application.run()
+    response = application.run("What makes a system AI-native?")
 
     model.generate.assert_called_once_with("What makes a system AI-native?")
-    captured = capsys.readouterr()
-    assert captured.out == "A generated response\n"
+    assert response == "A generated response"

@@ -5,6 +5,5 @@ class GyaanApplication:
     def __init__(self, model: ChatModel) -> None:
         self._model = model
 
-    def run(self) -> None:
-        response = self._model.generate("What makes a system AI-native?")
-        print(response)
+    def run(self, prompt: str) -> str:
+        return self._model.generate(prompt)
