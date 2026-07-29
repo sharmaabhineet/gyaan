@@ -1,8 +1,10 @@
 from gyaan.app import GyaanApplication
+from gyaan.echo_model import EchoModel
 
 
 def main() -> None:
-    application = GyaanApplication()
+    model = EchoModel()
+    application = GyaanApplication(model)
     application.run()
 
 

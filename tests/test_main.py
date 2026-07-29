@@ -4,12 +4,16 @@ from gyaan.main import main
 
 
 @patch("gyaan.main.GyaanApplication")
-def test_main_runs_application(
+@patch("gyaan.main.EchoModel")
+def test_main_wires_echo_model_into_application(
+    model_class: Mock,
     application_class: Mock,
 ) -> None:
+    model = model_class.return_value
     application = application_class.return_value
 
     main()
 
-    application_class.assert_called_once_with()
+    model_class.assert_called_once_with()
+    application_class.assert_called_once_with(model)
     application.run.assert_called_once_with()
