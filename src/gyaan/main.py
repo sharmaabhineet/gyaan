@@ -5,6 +5,8 @@ from collections.abc import Sequence
 from openai import OpenAI
 
 from gyaan.app import GyaanApplication
+from gyaan.chat_model import ChatModel
+from gyaan.echo_model import EchoModel
 from gyaan.openai_model import OpenAIModel
 
 
@@ -22,13 +24,20 @@ def parse_args(args: Sequence[str] | None = None) -> argparse.Namespace:
 
 
 def create_application() -> GyaanApplication:
-    model_name = os.environ["GYAAN_MODEL"]
+    provider = os.getenv("GYAAN_PROVIDER", "echo")
 
-    client = OpenAI()
-    model = OpenAIModel(
-        client=client,
-        model=model_name,
-    )
+    model: ChatModel
+
+    if provider == "echo":
+        model = EchoModel()
+    elif provider == "openai":
+        client = OpenAI()
+        model = OpenAIModel(
+            client=client,
+            model=os.environ["GYAAN_MODEL"],
+        )
+    else:
+        raise ValueError(f"Unsupported model provider: {provider}")
 
     return GyaanApplication(model)
 

@@ -3,7 +3,7 @@ from unittest.mock import Mock
 import pytest
 
 from gyaan.app import GyaanApplication
-from gyaan.main import main, parse_args
+from gyaan.main import create_application, main, parse_args
 
 
 def test_parse_args_returns_prompt() -> None:
@@ -32,9 +32,36 @@ def test_main_prints_application_response(
     assert captured.out == "A model-generated response.\n"
 
 
-def test_create_application_builds_openai_application(
+def test_create_application_uses_echo_model_by_default(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    echo_model = Mock()
+    application = Mock()
+
+    echo_model_factory = Mock(return_value=echo_model)
+    application_factory = Mock(return_value=application)
+
+    monkeypatch.delenv("GYAAN_PROVIDER", raising=False)
+    monkeypatch.setattr(
+        "gyaan.main.EchoModel",
+        echo_model_factory,
+    )
+    monkeypatch.setattr(
+        "gyaan.main.GyaanApplication",
+        application_factory,
+    )
+
+    result = create_application()
+
+    echo_model_factory.assert_called_once_with()
+    application_factory.assert_called_once_with(echo_model)
+    assert result is application
+
+
+def test_create_application_uses_openai_model(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("GYAAN_PROVIDER", "openai")
     monkeypatch.setenv("GYAAN_MODEL", "test-model")
 
     client = Mock()
@@ -58,8 +85,6 @@ def test_create_application_builds_openai_application(
         application_factory,
     )
 
-    from gyaan.main import create_application
-
     result = create_application()
 
     openai_client_factory.assert_called_once_with()
@@ -69,3 +94,15 @@ def test_create_application_builds_openai_application(
     )
     application_factory.assert_called_once_with(openai_model)
     assert result is application
+
+
+def test_create_application_rejects_unknown_provider(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("GYAAN_PROVIDER", "unknown")
+
+    with pytest.raises(
+        ValueError,
+        match="Unsupported model provider: unknown",
+    ):
+        create_application()
