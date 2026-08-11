@@ -9,6 +9,7 @@ description = "Building AI-native systems from first principles"
 requires-python = ">=3.11"
 
 dependencies = [
+    "ollama>=0.6,<0.7",
     "openai>=2,<3",
 ]
 
