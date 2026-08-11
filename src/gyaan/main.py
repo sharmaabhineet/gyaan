@@ -2,11 +2,13 @@ import argparse
 import os
 from collections.abc import Sequence
 
+from ollama import Client as OllamaClient
 from openai import OpenAI
 
 from gyaan.app import GyaanApplication
 from gyaan.chat_model import ChatModel
 from gyaan.echo_model import EchoModel
+from gyaan.ollama_model import OllamaModel
 from gyaan.openai_model import OpenAIModel
 
 
@@ -34,6 +36,12 @@ def create_application() -> GyaanApplication:
         client = OpenAI()
         model = OpenAIModel(
             client=client,
+            model=os.environ["GYAAN_MODEL"],
+        )
+    elif provider == "ollama":
+        ollama_client = OllamaClient()
+        model = OllamaModel(
+            client=ollama_client,
             model=os.environ["GYAAN_MODEL"],
         )
     else:

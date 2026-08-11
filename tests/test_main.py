@@ -96,6 +96,44 @@ def test_create_application_uses_openai_model(
     assert result is application
 
 
+def test_create_application_uses_ollama_model(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("GYAAN_PROVIDER", "ollama")
+    monkeypatch.setenv("GYAAN_MODEL", "test-model")
+
+    client = Mock()
+    ollama_model = Mock()
+    application = Mock()
+
+    ollama_client_factory = Mock(return_value=client)
+    ollama_model_factory = Mock(return_value=ollama_model)
+    application_factory = Mock(return_value=application)
+
+    monkeypatch.setattr(
+        "gyaan.main.OllamaClient",
+        ollama_client_factory,
+    )
+    monkeypatch.setattr(
+        "gyaan.main.OllamaModel",
+        ollama_model_factory,
+    )
+    monkeypatch.setattr(
+        "gyaan.main.GyaanApplication",
+        application_factory,
+    )
+
+    result = create_application()
+
+    ollama_client_factory.assert_called_once_with()
+    ollama_model_factory.assert_called_once_with(
+        client=client,
+        model="test-model",
+    )
+    application_factory.assert_called_once_with(ollama_model)
+    assert result is application
+
+
 def test_create_application_rejects_unknown_provider(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
