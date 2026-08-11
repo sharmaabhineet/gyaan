@@ -1,9 +1,7 @@
 from openai import OpenAI
 
-from gyaan.chat_model import ChatModel
 
-
-class OpenAIModel(ChatModel):
+class OpenAIModel:
     def __init__(
         self,
         client: OpenAI,

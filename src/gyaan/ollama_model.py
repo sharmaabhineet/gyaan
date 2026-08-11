@@ -1,9 +1,7 @@
 from ollama import Client
 
-from gyaan.chat_model import ChatModel
 
-
-class OllamaModel(ChatModel):
+class OllamaModel:
     def __init__(
         self,
         client: Client,
