@@ -23,7 +23,11 @@ Every article, every commit, every release, and every design decision lives here
 
 ## Current Status
 
-Project Gyaan is currently at the conceptual architecture stage. Implementation begins in the upcoming articles.
+Project Gyaan is now in the implementation phase. The current system
+provides a command-line application with a provider-independent
+`ChatModel` abstraction and implementations for Echo, OpenAI, and Ollama.
+
+See the roadmap for what comes next.
 
 ## Architecture
 
