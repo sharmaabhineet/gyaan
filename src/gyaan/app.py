@@ -1,17 +1,12 @@
 from gyaan.chat_model import ChatModel
+from gyaan.research_prompt import ResearchPrompt
 
 
 class GyaanApplication:
-    def __init__(self, model: ChatModel) -> None:
+    def __init__(self, model: ChatModel, prompt: ResearchPrompt) -> None:
         self._model = model
+        self._prompt = prompt
 
     def run(self, question: str) -> str:
-        prompt = self._build_prompt(question)
-        return self._model.generate(prompt)
-
-    def _build_prompt(self, question: str) -> str:
-        return (
-            "You are Gyaan, a research assistant.\n"
-            "Answer the following question clearly and accurately.\n\n"
-            f"Question:\n{question}"
-        )
+        rendered_prompt = self._prompt.build(question)
+        return self._model.generate(rendered_prompt)
