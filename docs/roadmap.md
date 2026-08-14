@@ -3,7 +3,7 @@
 - [x] Repository created
 - [x] Article 00 — Introducing Project Gyaan
 - [x] Article 01 — What Makes a System AI-Native?
-- [ ] Article 02 — Building the First AI-Native System 
+- [x] Article 02 — Building the First AI-Native System
 - [ ] Article 03 — Prompts as Programs
 - [ ] Runtime
 - [ ] Memory

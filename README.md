@@ -13,6 +13,7 @@ Every article, every commit, every release, and every design decision lives here
 
 1. [Introducing Project Gyaan](articles/00-introducing-gyaan.md)
 2. [What Makes a System AI-Native?](articles/article-01/01-What-makes-system-ai-native.md)
+3. [Building the First AI-Native System](articles/article-02/02-building-the-first-ai-native-system.md)
 
 ## Project Foundations
 
