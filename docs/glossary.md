@@ -76,6 +76,17 @@ A prompt typically consists of much more than a user's question and may include 
 
 ---
 
+## Prompt Construction
+
+The deterministic process of assembling a prompt from its parts —
+application instructions, optional context, and user input — before it
+is sent to a language model.
+
+Prompt construction is ordinary, testable software. It does not
+require a model call and should not depend on one.
+
+---
+
 ## Prompt Engineering
 
 The practice of designing prompts that guide a language model toward better outputs.

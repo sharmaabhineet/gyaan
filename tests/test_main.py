@@ -36,15 +36,21 @@ def test_create_application_uses_echo_model_by_default(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     echo_model = Mock()
+    prompt = Mock()
     application = Mock()
 
     echo_model_factory = Mock(return_value=echo_model)
+    prompt_factory = Mock(return_value=prompt)
     application_factory = Mock(return_value=application)
 
     monkeypatch.delenv("GYAAN_PROVIDER", raising=False)
     monkeypatch.setattr(
         "gyaan.main.EchoModel",
         echo_model_factory,
+    )
+    monkeypatch.setattr(
+        "gyaan.main.ResearchPrompt",
+        prompt_factory,
     )
     monkeypatch.setattr(
         "gyaan.main.GyaanApplication",
@@ -54,7 +60,8 @@ def test_create_application_uses_echo_model_by_default(
     result = create_application()
 
     echo_model_factory.assert_called_once_with()
-    application_factory.assert_called_once_with(echo_model)
+    prompt_factory.assert_called_once_with()
+    application_factory.assert_called_once_with(echo_model, prompt)
     assert result is application
 
 
@@ -66,10 +73,12 @@ def test_create_application_uses_openai_model(
 
     client = Mock()
     openai_model = Mock()
+    prompt = Mock()
     application = Mock()
 
     openai_client_factory = Mock(return_value=client)
     openai_model_factory = Mock(return_value=openai_model)
+    prompt_factory = Mock(return_value=prompt)
     application_factory = Mock(return_value=application)
 
     monkeypatch.setattr(
@@ -79,6 +88,10 @@ def test_create_application_uses_openai_model(
     monkeypatch.setattr(
         "gyaan.main.OpenAIModel",
         openai_model_factory,
+    )
+    monkeypatch.setattr(
+        "gyaan.main.ResearchPrompt",
+        prompt_factory,
     )
     monkeypatch.setattr(
         "gyaan.main.GyaanApplication",
@@ -92,7 +105,7 @@ def test_create_application_uses_openai_model(
         client=client,
         model="test-model",
     )
-    application_factory.assert_called_once_with(openai_model)
+    application_factory.assert_called_once_with(openai_model, prompt)
     assert result is application
 
 
@@ -104,10 +117,12 @@ def test_create_application_uses_ollama_model(
 
     client = Mock()
     ollama_model = Mock()
+    prompt = Mock()
     application = Mock()
 
     ollama_client_factory = Mock(return_value=client)
     ollama_model_factory = Mock(return_value=ollama_model)
+    prompt_factory = Mock(return_value=prompt)
     application_factory = Mock(return_value=application)
 
     monkeypatch.setattr(
@@ -117,6 +132,10 @@ def test_create_application_uses_ollama_model(
     monkeypatch.setattr(
         "gyaan.main.OllamaModel",
         ollama_model_factory,
+    )
+    monkeypatch.setattr(
+        "gyaan.main.ResearchPrompt",
+        prompt_factory,
     )
     monkeypatch.setattr(
         "gyaan.main.GyaanApplication",
@@ -130,7 +149,7 @@ def test_create_application_uses_ollama_model(
         client=client,
         model="test-model",
     )
-    application_factory.assert_called_once_with(ollama_model)
+    application_factory.assert_called_once_with(ollama_model, prompt)
     assert result is application
 
 
