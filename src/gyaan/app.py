@@ -1,5 +1,5 @@
 from gyaan.chat_model import ChatModel
-from gyaan.research_prompt import ResearchPrompt
+from gyaan.research_prompt import ResearchPrompt, ResearchPromptInput
 
 
 class GyaanApplication:
@@ -8,5 +8,6 @@ class GyaanApplication:
         self._prompt = prompt
 
     def run(self, question: str) -> str:
-        rendered_prompt = self._prompt.build(question)
+        prompt_input = ResearchPromptInput(question=question)
+        rendered_prompt = self._prompt.build(prompt_input)
         return self._model.generate(rendered_prompt)
