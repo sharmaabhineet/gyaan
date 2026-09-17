@@ -14,6 +14,7 @@ Every article, every commit, every release, and every design decision lives here
 1. [Introducing Project Gyaan](articles/00-introducing-gyaan.md)
 2. [What Makes a System AI-Native?](articles/article-01/01-What-makes-system-ai-native.md)
 3. [Building the First AI-Native System](articles/article-02/02-building-the-first-ai-native-system.md)
+4. [Prompts as Programs](articles/article-03/03-prompts-as-programs.md)
 
 ## Project Foundations
 
@@ -27,24 +28,41 @@ Every article, every commit, every release, and every design decision lives here
 Project Gyaan is now in the implementation phase. The current system
 provides a command-line application with a provider-independent
 `ChatModel` abstraction and implementations for Echo, OpenAI, and Ollama.
+Prompt construction is a separate, deterministic step: `ResearchPrompt`
+builds the prompt sent to the model from application instructions, an
+optional context, and the user's question.
 
 See the roadmap for what comes next.
 
 ## Architecture
 
-Gyaan's application layer depends on a `ChatModel` abstraction, not on any specific provider:
+The user's question is not the prompt sent to the model. `GyaanApplication`
+asks `ResearchPrompt` to render a prompt — instructions, optional context,
+and the question — before handing it to a `ChatModel`, which stays
+independent of any specific provider:
 
 ```
+User Question
+      |
+      v
 GyaanApplication
-        |
-        v
+      |
+      v
+ResearchPrompt
+      |
+      v
+Rendered Prompt
+      |
+      v
     ChatModel
     /   |    \
    /    |     \
 Echo  OpenAI  Ollama
 ```
 
-Changing the model provider is a composition/configuration change, not an application-layer change.
+Changing the model provider is a composition/configuration change, not an
+application-layer change. Changing what the model is told is a
+`ResearchPrompt` change, not a `ChatModel` change.
 
 ## Running Gyaan
 

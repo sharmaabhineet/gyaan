@@ -10,6 +10,7 @@ from gyaan.chat_model import ChatModel
 from gyaan.echo_model import EchoModel
 from gyaan.ollama_model import OllamaModel
 from gyaan.openai_model import OpenAIModel
+from gyaan.research_prompt import ResearchPrompt
 
 
 def parse_args(args: Sequence[str] | None = None) -> argparse.Namespace:
@@ -47,7 +48,7 @@ def create_application() -> GyaanApplication:
     else:
         raise ValueError(f"Unsupported model provider: {provider}")
 
-    return GyaanApplication(model)
+    return GyaanApplication(model, ResearchPrompt())
 
 
 def main(args: Sequence[str] | None = None) -> None:
